@@ -59,9 +59,9 @@ if (BL1 AND PLATFORM_DEFAULT_BL1)
 endif()
 
 # Load MCUboot specific default.cmake
-if (NOT DEFINED BL2 OR BL2)
-    include(${CMAKE_SOURCE_DIR}/bl2/ext/mcuboot/mcuboot_default_config.cmake)
-endif()
+# if (NOT DEFINED BL2 OR BL2)
+#     include(${CMAKE_SOURCE_DIR}/bl2/ext/mcuboot/mcuboot_default_config.cmake)
+# endif()
 
 # Include coprocessor configs
 include(config/cp_config_default.cmake)
@@ -72,7 +72,7 @@ include(config/config_default.cmake)
 # Fetch tf-m-tests repo during config, if NS or regression test is required.
 # Therefore tf-m-tests configs can be set with TF-M configs since their configs
 # are coupled.
-include(lib/ext/tf-m-tests/tf-m-tests.cmake)
+# include(lib/ext/tf-m-tests/tf-m-tests.cmake)
 
 # Load TF-M regression test suites setting
 if (TFM_NS_REG_TEST OR TFM_S_REG_TEST)
