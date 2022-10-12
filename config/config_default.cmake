@@ -5,12 +5,12 @@
 #
 #-------------------------------------------------------------------------------
 
-set(TFM_TOOLCHAIN_FILE                  ${CMAKE_SOURCE_DIR}/toolchain_GNUARM.cmake CACHE FILEPATH    "Path to TFM compiler toolchain file")
+#set(TFM_TOOLCHAIN_FILE                  ${CMAKE_SOURCE_DIR}/toolchain_GNUARM.cmake CACHE FILEPATH    "Path to TFM compiler toolchain file")
 set(TFM_PLATFORM                        ""          CACHE STRING    "Platform to build TF-M for. Must be either a relative path from [TF-M]/platform/ext/target, or an absolute path.")
 set(CROSS_COMPILE                       arm-none-eabi CACHE STRING  "Cross-compilation triplet")
 
 set(BL1                                 OFF         CACHE BOOL      "Whether to build BL1")
-set(BL2                                 ON          CACHE BOOL      "Whether to build BL2")
+set(BL2                                 OFF         CACHE BOOL      "Whether to build BL2")
 set(NS                                  ON          CACHE BOOL      "Whether to build NS app")
 
 set(TEST_S                              OFF         CACHE BOOL      "Whether to build S regression tests")
@@ -142,7 +142,7 @@ set(ATTEST_INCLUDE_COSE_KEY_ID          OFF         CACHE BOOL      "Include COS
 
 set(TFM_PARTITION_PLATFORM              ON          CACHE BOOL      "Enable Platform partition")
 
-set(TFM_PARTITION_AUDIT_LOG             OFF         CACHE BOOL      "Enable Audit Log partition")
+set(TFM_PARTITION_AUDIT_LOG             ON          CACHE BOOL      "Enable Audit Log partition")
 
 set(TFM_PARTITION_PSA_PROXY             OFF         CACHE BOOL      "Enable PSA Proxy partition")
 
