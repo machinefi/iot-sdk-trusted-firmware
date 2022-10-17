@@ -8,20 +8,27 @@
 cmake_minimum_required(VERSION 3.15)
 
 project(iotex_trusted_firmware)
+include(CMakePrintHelpers)
 
-include(${CMAKE_SOURCE_DIR}/config/set_config.cmake)
+include(${PROJECT_SOURCE_DIR}/config/set_config.cmake)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/interface/include/psa/framework_feature.h.in
+configure_file(interface/include/psa/framework_feature.h.in
                ${CMAKE_BINARY_DIR}/generated/interface/include/psa/framework_feature.h
                @ONLY)
 
-#SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)		
-#SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)		
-SET(LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../build/out/lib)		
 
-ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/interface)				
-ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/secure_fw)
-					
-add_library(iotex_trusted_firmware STATIC $<TARGET_OBJECTS:iotex_tf_nonsecure> $<TARGET_OBJECTS:iotex_tf_secure>)
+ADD_SUBDIRECTORY(${PROJECT_SOURCE_DIR}/interface)				
+ADD_SUBDIRECTORY(${PROJECT_SOURCE_DIR}/secure_fw)
+		
+add_library(iotex_trusted_firmware STATIC 
+    $<TARGET_OBJECTS:iotex_tf_nonsecure>)
 
-#target_link_libraries(iotex_trusted_firmware PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/libmbedcrypto.a)
+# Also add a copy of the target iotex_trusted_firmware that exposes mbedcrypto and iotex_tf_secure
+# We need this because the PSA tests need to access these libraries
+# TODO Check if the user facing library (non test) need to expose mbedcrypto and iotex_tf_secure
+add_library(iotex_trusted_firmware_test STATIC 
+    $<TARGET_OBJECTS:iotex_tf_nonsecure>)
+
+target_link_libraries(iotex_trusted_firmware_test
+    PUBLIC mbedcrypto
+    PUBLIC $<TARGET_OBJECTS:iotex_tf_secure>)

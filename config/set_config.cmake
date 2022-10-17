@@ -21,19 +21,19 @@ endif()
 
 # Load build type config, setting options not already set
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWERCASE)
-if (EXISTS ${CMAKE_SOURCE_DIR}/config/build_type/${CMAKE_BUILD_TYPE_LOWERCASE}.cmake)
-    include(${CMAKE_SOURCE_DIR}/config/build_type/${CMAKE_BUILD_TYPE_LOWERCASE}.cmake)
+if (EXISTS ${PROJECT_SOURCE_DIR}/config/build_type/${CMAKE_BUILD_TYPE_LOWERCASE}.cmake)
+    include(${PROJECT_SOURCE_DIR}/config/build_type/${CMAKE_BUILD_TYPE_LOWERCASE}.cmake)
 endif()
 
 # Load platform config, setting options not already set
-if (EXISTS ${CMAKE_SOURCE_DIR}/platform/ext/target/${TFM_PLATFORM}/config.cmake)
+if (EXISTS ${PROJECT_SOURCE_DIR}/platform/ext/target/${TFM_PLATFORM}/config.cmake)
     include(platform/ext/target/${TFM_PLATFORM}/config.cmake)
 endif()
 
 # Load accelerator config, setting options not already set
 if (CRYPTO_HW_ACCELERATOR)
-    if (EXISTS ${CMAKE_SOURCE_DIR}/platform/ext/accelerator/${CRYPTO_HW_ACCELERATOR_TYPE}/config.cmake)
-        include(${CMAKE_SOURCE_DIR}/platform/ext/accelerator/${CRYPTO_HW_ACCELERATOR_TYPE}/config.cmake)
+    if (EXISTS ${PROJECT_SOURCE_DIR}/platform/ext/accelerator/${CRYPTO_HW_ACCELERATOR_TYPE}/config.cmake)
+        include(${PROJECT_SOURCE_DIR}/platform/ext/accelerator/${CRYPTO_HW_ACCELERATOR_TYPE}/config.cmake)
     endif()
 endif()
 
@@ -42,7 +42,7 @@ if (TFM_PROFILE)
     include(config/profile/${TFM_PROFILE}.cmake)
 endif()
 
-include(${CMAKE_SOURCE_DIR}/config/tfm_build_log_config.cmake)
+include(${PROJECT_SOURCE_DIR}/config/tfm_build_log_config.cmake)
 
 # Load TF-M model specific default config
 if (TFM_LIB_MODEL)
@@ -55,12 +55,12 @@ endif()
 
 # Load bl1 config
 if (BL1 AND PLATFORM_DEFAULT_BL1)
-    include(${CMAKE_SOURCE_DIR}/bl1/config/bl1_config_default.cmake)
+    include(${PROJECT_SOURCE_DIR}/bl1/config/bl1_config_default.cmake)
 endif()
 
 # Load MCUboot specific default.cmake
 # if (NOT DEFINED BL2 OR BL2)
-#     include(${CMAKE_SOURCE_DIR}/bl2/ext/mcuboot/mcuboot_default_config.cmake)
+#     include(${PROJECT_SOURCE_DIR}/bl2/ext/mcuboot/mcuboot_default_config.cmake)
 # endif()
 
 # Include coprocessor configs
