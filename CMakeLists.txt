@@ -30,5 +30,16 @@ add_library(iotex_trusted_firmware_test STATIC
     $<TARGET_OBJECTS:iotex_tf_nonsecure>)
 
 target_link_libraries(iotex_trusted_firmware_test
-    PUBLIC mbedcrypto
     PUBLIC $<TARGET_OBJECTS:iotex_tf_secure>)
+
+if(CRYPTO_IMPL STREQUAL "MbedTLS")
+  target_link_libraries(iotex_trusted_firmware_test
+    PUBLIC mbedcrypto
+  )
+endif()
+
+if(CRYPTO_IMPL STREQUAL "TinyCrypt")
+  target_link_libraries(iotex_trusted_firmware_test
+    PUBLIC tinycrypt
+  )
+endif()
