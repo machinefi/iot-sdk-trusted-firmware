@@ -5,7 +5,6 @@
  *
  */
 
-#include "tfm_mbedcrypto_include.h"
 
 #include "tfm_crypto_api.h"
 #include "tfm_crypto_defs.h"

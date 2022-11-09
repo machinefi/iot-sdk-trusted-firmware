@@ -8,7 +8,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "tfm_mbedcrypto_include.h"
 
 /* Required for mbedtls_calloc in tfm_crypto_huk_derivation_input_bytes */
 #include "mbedtls/platform.h"
