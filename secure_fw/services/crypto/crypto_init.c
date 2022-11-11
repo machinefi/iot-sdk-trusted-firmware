@@ -14,7 +14,9 @@
  * \brief This Mbed TLS include is needed to initialise the memory allocator
  *        inside the Mbed TLS layer of Mbed Crypto
  */
-#include "mbedtls/memory_buffer_alloc.h"
+#if defined(CRYPTO_IMPL_MBEDTLS)
+    #include "mbedtls/memory_buffer_alloc.h"
+#endif
 
 #ifdef CRYPTO_NV_SEED
 #include "tfm_plat_crypto_nv_seed.h"
