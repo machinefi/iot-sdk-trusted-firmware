@@ -138,7 +138,7 @@ psa_status_t tfm_crypto_operation_lookup(enum tfm_crypto_operation_type type,
  * \return Return values as described in \ref psa_status_t
  */
 psa_status_t tfm_crypto_encode_id_and_owner(psa_key_id_t key_id,
-                                            mbedtls_svc_key_id_t *enc_key_ptr);
+                                            psa_key_id_t *enc_key_ptr);
 
 #define LIST_TFM_CRYPTO_UNIFORM_SIGNATURE_API \
     X(tfm_crypto_get_key_attributes)          \

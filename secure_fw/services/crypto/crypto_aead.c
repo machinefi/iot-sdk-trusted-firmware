@@ -47,7 +47,7 @@ psa_status_t tfm_crypto_aead_encrypt(psa_invec in_vec[],
     size_t ciphertext_size = out_vec[0].len;
     const uint8_t *additional_data = in_vec[2].base;
     size_t additional_data_length = in_vec[2].len;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     /* Initialise ciphertext_length to zero. */
     out_vec[0].len = 0;
@@ -92,7 +92,7 @@ psa_status_t tfm_crypto_aead_decrypt(psa_invec in_vec[],
     size_t plaintext_size = out_vec[0].len;
     const uint8_t *additional_data = in_vec[2].base;
     size_t additional_data_length = in_vec[2].len;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     /* Initialise plaintext_length to zero. */
     out_vec[0].len = 0;
@@ -130,7 +130,7 @@ psa_status_t tfm_crypto_aead_encrypt_setup(psa_invec in_vec[],
     uint32_t *handle_out = out_vec[0].base;
     psa_key_id_t key_id = iov->key_id;
     psa_algorithm_t alg = iov->alg;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     /* Init the handle in the operation with the one passed from the iov */
     *handle_out = iov->op_handle;
@@ -185,7 +185,7 @@ psa_status_t tfm_crypto_aead_decrypt_setup(psa_invec in_vec[],
     uint32_t *handle_out = out_vec[0].base;
     psa_key_id_t key_id = iov->key_id;
     psa_algorithm_t alg = iov->alg;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     /* Init the handle in the operation with the one passed from the iov */
     *handle_out = iov->op_handle;

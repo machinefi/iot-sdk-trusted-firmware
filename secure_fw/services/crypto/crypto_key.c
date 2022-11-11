@@ -90,7 +90,7 @@ psa_status_t tfm_crypto_key_attributes_to_client(
 }
 
 psa_status_t tfm_crypto_encode_id_and_owner(psa_key_id_t key_id,
-                                            mbedtls_svc_key_id_t *enc_key_ptr)
+                                            psa_key_id_t *enc_key_ptr)
 {
     int32_t partition_id = 0;
 #if defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)

@@ -85,7 +85,7 @@ static psa_status_t tfm_crypto_huk_derivation_input_bytes(
 static psa_status_t tfm_crypto_huk_derivation_output_key(
                                       const psa_key_attributes_t *attributes,
                                       psa_key_derivation_operation_t *operation,
-                                      mbedtls_svc_key_id_t *key_id)
+                                      psa_key_id_t *key_id)
 {
     enum tfm_plat_err_t err = TFM_PLAT_ERR_SUCCESS;
     size_t bytes = PSA_BITS_TO_BYTES(psa_get_key_bits(attributes));
@@ -344,7 +344,7 @@ psa_status_t tfm_crypto_key_derivation_input_key(psa_invec in_vec[],
     psa_key_id_t key_id = iov->key_id;
     psa_key_derivation_step_t step = iov->step;
     psa_key_derivation_operation_t *operation = NULL;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     /* Look up the corresponding operation context */
     status = tfm_crypto_operation_lookup(TFM_CRYPTO_KEY_DERIVATION_OPERATION,
@@ -388,7 +388,7 @@ psa_status_t tfm_crypto_key_derivation_output_key(psa_invec in_vec[],
     psa_key_id_t *key_handle = out_vec[0].base;
     psa_key_attributes_t key_attributes = PSA_KEY_ATTRIBUTES_INIT;
     int32_t partition_id;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     /* Look up the corresponding operation context */
     status = tfm_crypto_operation_lookup(TFM_CRYPTO_KEY_DERIVATION_OPERATION,
@@ -504,7 +504,7 @@ psa_status_t tfm_crypto_key_derivation_key_agreement(psa_invec in_vec[],
     size_t peer_key_length = in_vec[1].len;
     psa_key_derivation_operation_t *operation = NULL;
     psa_key_derivation_step_t step = iov->step;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     /* Look up the corresponding operation context */
     status = tfm_crypto_operation_lookup(TFM_CRYPTO_KEY_DERIVATION_OPERATION,
@@ -547,7 +547,7 @@ psa_status_t tfm_crypto_raw_key_agreement(psa_invec in_vec[],
     psa_key_id_t private_key = iov->key_id;
     const uint8_t *peer_key = in_vec[1].base;
     size_t peer_key_length = in_vec[1].len;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
     psa_status_t status;
 
     status = tfm_crypto_encode_id_and_owner(private_key, &encoded_key);

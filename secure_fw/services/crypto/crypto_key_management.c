@@ -37,7 +37,7 @@ psa_status_t tfm_crypto_import_key(psa_invec in_vec[],
 
     psa_status_t status;
     psa_key_attributes_t key_attributes = psa_key_attributes_init();
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
     int32_t partition_id = 0;
 
 #if defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
@@ -87,7 +87,7 @@ psa_status_t tfm_crypto_open_key(psa_invec in_vec[],
     psa_key_id_t client_key_id = *((psa_key_id_t *)in_vec[1].base);
     psa_key_id_t *key = out_vec[0].base;
     psa_status_t status;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
     int32_t partition_id = 0;
 
 #if defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
@@ -136,7 +136,7 @@ psa_status_t tfm_crypto_close_key(psa_invec in_vec[],
     const struct tfm_crypto_pack_iovec *iov = in_vec[0].base;
 
     psa_key_id_t key = iov->key_id;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
     int32_t partition_id = 0;
     psa_status_t status;
 
@@ -171,7 +171,7 @@ psa_status_t tfm_crypto_destroy_key(psa_invec in_vec[],
     }
     const struct tfm_crypto_pack_iovec *iov = in_vec[0].base;
     psa_key_id_t key = iov->key_id;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
     int32_t partition_id = 0;
     psa_status_t status;
 
@@ -209,7 +209,7 @@ psa_status_t tfm_crypto_get_key_attributes(psa_invec in_vec[],
     struct psa_client_key_attributes_s *client_key_attr = out_vec[0].base;
     psa_status_t status;
     psa_key_attributes_t key_attributes = PSA_KEY_ATTRIBUTES_INIT;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
     int32_t partition_id = 0;
 
 #if defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
@@ -292,7 +292,7 @@ psa_status_t tfm_crypto_export_key(psa_invec in_vec[],
     psa_key_id_t key = iov->key_id;
     uint8_t *data = out_vec[0].base;
     size_t data_size = out_vec[0].len;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
     int32_t partition_id = 0;
     psa_status_t status;
 
@@ -328,7 +328,7 @@ psa_status_t tfm_crypto_export_public_key(psa_invec in_vec[],
     psa_key_id_t key = iov->key_id;
     uint8_t *data = out_vec[0].base;
     size_t data_size = out_vec[0].len;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
     int32_t partition_id = 0;
     psa_status_t status;
 
@@ -363,7 +363,7 @@ psa_status_t tfm_crypto_purge_key(psa_invec in_vec[],
     }
     const struct tfm_crypto_pack_iovec *iov = in_vec[0].base;
     psa_key_id_t key = iov->key_id;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
     int32_t partition_id = 0;
     psa_status_t status;
 
@@ -404,8 +404,8 @@ psa_status_t tfm_crypto_copy_key(psa_invec in_vec[],
     psa_status_t status;
     psa_key_attributes_t key_attributes = PSA_KEY_ATTRIBUTES_INIT;
     int32_t partition_id = 0;
-    mbedtls_svc_key_id_t target_key;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t target_key;
+    psa_key_id_t encoded_key;
 
 #if defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
     status = tfm_crypto_get_caller_id(&partition_id);
@@ -459,7 +459,7 @@ psa_status_t tfm_crypto_generate_key(psa_invec in_vec[],
     psa_status_t status;
     psa_key_attributes_t key_attributes = PSA_KEY_ATTRIBUTES_INIT;
     int32_t partition_id = 0;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     status = tfm_crypto_get_caller_id(&partition_id);
     if (status != PSA_SUCCESS) {

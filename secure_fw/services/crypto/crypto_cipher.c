@@ -120,7 +120,7 @@ psa_status_t tfm_crypto_cipher_encrypt_setup(psa_invec in_vec[],
     uint32_t *handle_out = out_vec[0].base;
     psa_key_id_t key_id = iov->key_id;
     psa_algorithm_t alg = iov->alg;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     /* Allocate the operation context in the secure world */
     status = tfm_crypto_operation_alloc(TFM_CRYPTO_CIPHER_OPERATION,
@@ -172,7 +172,7 @@ psa_status_t tfm_crypto_cipher_decrypt_setup(psa_invec in_vec[],
     uint32_t *handle_out = out_vec[0].base;
     psa_key_id_t key_id = iov->key_id;
     psa_algorithm_t alg = iov->alg;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     /* Allocate the operation context in the secure world */
     status = tfm_crypto_operation_alloc(TFM_CRYPTO_CIPHER_OPERATION,
@@ -362,7 +362,7 @@ psa_status_t tfm_crypto_cipher_encrypt(psa_invec in_vec[],
     size_t input_length = in_vec[1].len;
     uint8_t *output = out_vec[0].base;
     size_t output_size = out_vec[0].len;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     status = tfm_crypto_encode_id_and_owner(key_id, &encoded_key);
     if (status != PSA_SUCCESS) {
@@ -396,7 +396,7 @@ psa_status_t tfm_crypto_cipher_decrypt(psa_invec in_vec[],
     size_t input_length = in_vec[1].len;
     uint8_t *output = out_vec[0].base;
     size_t output_size = out_vec[0].len;
-    mbedtls_svc_key_id_t encoded_key;
+    psa_key_id_t encoded_key;
 
     status = tfm_crypto_encode_id_and_owner(key_id, &encoded_key);
     if (status != PSA_SUCCESS) {
