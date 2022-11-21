@@ -20,12 +20,6 @@ target_include_directories(iotex_tf_secure
 PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${PROJECT_SOURCE_DIR}/../../crypto
-#        ${PROJECT_SOURCE_DIR}/../mbed-crypto/include
-#        ${PROJECT_SOURCE_DIR}/../mbed-crypto/include/mbedtls
-#        ${PROJECT_SOURCE_DIR}/../mbed-crypto/include/psa
-        ${PROJECT_SOURCE_DIR}/../../crypto/mbedtls/include
-        ${PROJECT_SOURCE_DIR}/../../crypto/mbedtls/include/mbedtls
-        ${PROJECT_SOURCE_DIR}/../../crypto/mbedtls/include/psa
         ${PROJECT_SOURCE_DIR}
         ${PROJECT_SOURCE_DIR}/interface/include
         ${PROJECT_SOURCE_DIR}/platform/ext/common
