@@ -28,3 +28,11 @@ PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/core
         ${CMAKE_CURRENT_SOURCE_DIR}/core/include
 )
+
+if(CRYPTO_IMPL STREQUAL "MbedTLS")
+  target_link_libraries(iotex_tf_secure PUBLIC mbedtls)
+endif()
+
+if(CRYPTO_IMPL STREQUAL "TinyCrypt")
+  target_link_libraries(iotex_tf_secure PUBLIC tinycrypt)
+endif()
