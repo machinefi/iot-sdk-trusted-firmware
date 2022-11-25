@@ -25,8 +25,6 @@
 
 #include <stdint.h>
 
-#include "private_access.h"
-
 /** \defgroup error Error codes
  * @{
  */
