@@ -12,7 +12,7 @@
 #include "tfm_crypto_defs.h"
 #include "tfm_crypto_private.h"
 
-//#include "iotex_tf_mbedtls_r.h"
+#include "crypto_spe.h"
 
 psa_status_t tfm_crypto_import_key(psa_invec in_vec[],
                                    size_t in_len,

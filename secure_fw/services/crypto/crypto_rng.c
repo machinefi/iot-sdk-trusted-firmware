@@ -14,7 +14,6 @@
 #include "tfm_crypto_defs.h"
 #include "tfm_crypto_private.h"
 
-
 /*!
  * \defgroup public_psa Public functions, PSA
  *

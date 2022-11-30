@@ -18,6 +18,7 @@
 
 #include "tfm_plat_crypto_keys.h"
 #include "tfm_crypto_private.h"
+#include "crypto_spe.h"
 
 #ifdef TFM_PARTITION_TEST_PS
 #include "psa_manifest/pid.h"

@@ -9,12 +9,13 @@
 #include "tfm_crypto_api.h"
 #include "tfm_crypto_defs.h"
 //#include "tfm_sp_log.h"
+#include "crypto_spe.h"
 
 /*
  * \brief This Mbed TLS include is needed to initialise the memory allocator
  *        inside the Mbed TLS layer of Mbed Crypto
  */
-#if defined(CRYPTO_IMPL_MBEDTLS)
+#ifdef CRYPTO_IMPL_MBEDTLS
     #include "mbedtls/memory_buffer_alloc.h"
 #endif
 
