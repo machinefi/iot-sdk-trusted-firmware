@@ -1,18 +1,20 @@
-#-------------------------------------------------------------------------------
-# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
-#
-# SPDX-License-Identifier: BSD-3-Clause
-#
-#-------------------------------------------------------------------------------
-
 cmake_minimum_required(VERSION 3.15)
 
-aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src SRCS_INTERFACE)
+add_library(iotex_sdk_interface STATIC
+  src/iotex_audit_func_api.c
+  src/iotex_crypto_func_api.c
+  src/iotex_its_func_api.c
+  src/iotex_ns_interface.c
+  src/iotex_ps_func_api.c
+)
 
-add_library(iotex_tf_nonsecure ${SRCS_INTERFACE})
+target_include_directories(iotex_sdk_interface
+  PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_BINARY_DIR}/generated/interface/include
+  )
 
-target_include_directories(iotex_tf_nonsecure
-PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-        ${CMAKE_BINARY_DIR}/generated/interface/include
+target_link_libraries(iotex_sdk_interface
+    PRIVATE
+      tfm_services
 )

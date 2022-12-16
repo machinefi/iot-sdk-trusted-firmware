@@ -6,7 +6,6 @@
  */
 
 #include "tfm_protected_storage.h"
-//#include "ps_object_system.h"
 #include "tfm_ps_defs.h"
 
 psa_status_t tfm_ps_init(void)

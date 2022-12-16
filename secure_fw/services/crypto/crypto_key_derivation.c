@@ -18,11 +18,14 @@
 
 #include "tfm_plat_crypto_keys.h"
 #include "tfm_crypto_private.h"
-#include "crypto_spe.h"
 
 #ifdef TFM_PARTITION_TEST_PS
 #include "psa_manifest/pid.h"
 #endif /* TFM_PARTITION_TEST_PS */
+
+#ifdef CRYPTO_IMPL_MBEDTLS
+    #include "mbedtls/private_access.h"
+#endif
 
 #ifndef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
 static psa_status_t tfm_crypto_huk_derivation_setup(

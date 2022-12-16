@@ -12,8 +12,6 @@
 #include "tfm_crypto_defs.h"
 #include "tfm_crypto_private.h"
 
-#include "crypto_spe.h"
-
 psa_status_t tfm_crypto_import_key(psa_invec in_vec[],
                                    size_t in_len,
                                    psa_outvec out_vec[],

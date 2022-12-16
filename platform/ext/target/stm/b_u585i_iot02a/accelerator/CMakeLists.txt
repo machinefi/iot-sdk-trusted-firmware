@@ -110,7 +110,3 @@ target_link_libraries(platform_s
     PRIVATE
         crypto_service_crypto_hw
 )
-target_link_libraries(crypto_service_crypto_hw
-     INTERFACE
-     tfm_partition_defs
-)
