@@ -8,9 +8,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
-
-/* Required for mbedtls_calloc in tfm_crypto_huk_derivation_input_bytes */
-#include "mbedtls/platform.h"
+#ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+    /* Required for mbedtls_calloc in tfm_crypto_huk_derivation_input_bytes */
+    #include "mbedtls/platform.h"
+    #include "mbedtls/private_access.h"
+#endif
 
 #include "tfm_crypto_api.h"
 #include "tfm_crypto_defs.h"
@@ -22,10 +24,6 @@
 #ifdef TFM_PARTITION_TEST_PS
 #include "psa_manifest/pid.h"
 #endif /* TFM_PARTITION_TEST_PS */
-
-#ifdef CRYPTO_IMPL_MBEDTLS
-    #include "mbedtls/private_access.h"
-#endif
 
 #ifndef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
 static psa_status_t tfm_crypto_huk_derivation_setup(

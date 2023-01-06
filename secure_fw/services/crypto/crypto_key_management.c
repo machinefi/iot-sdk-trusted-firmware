@@ -96,7 +96,12 @@ psa_status_t tfm_crypto_open_key(psa_invec in_vec[],
 #endif
 
     /* Use the client key id as the key_id and its partition id as the owner */
-    encoded_key = mbedtls_svc_key_id_make(partition_id, client_key_id);
+    #ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+        encoded_key = mbedtls_svc_key_id_make(partition_id, client_key_id);
+    #else
+        // No support for key owner
+        encoded_key = client_key_id;
+    #endif
 
 #if defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
     status = psa_open_key(encoded_key, &encoded_key.private_key_id);
@@ -145,7 +150,12 @@ psa_status_t tfm_crypto_close_key(psa_invec in_vec[],
     }
 #endif
 
-    encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+        encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #else
+        // No support for key owner
+        encoded_key = key;
+    #endif
 
     return psa_close_key(encoded_key);
 
@@ -180,7 +190,12 @@ psa_status_t tfm_crypto_destroy_key(psa_invec in_vec[],
     }
 #endif
 
-    encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+        encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #else
+        // No support for key owner
+        encoded_key = key;
+    #endif
 
     return psa_destroy_key(encoded_key);
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -217,7 +232,12 @@ psa_status_t tfm_crypto_get_key_attributes(psa_invec in_vec[],
     }
 #endif
 
-    encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+        encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #else
+        // No support for key owner
+        encoded_key = key;
+    #endif
 
     status = psa_get_key_attributes(encoded_key, &key_attributes);
     if (status == PSA_SUCCESS) {
@@ -301,7 +321,12 @@ psa_status_t tfm_crypto_export_key(psa_invec in_vec[],
     }
 #endif
 
-    encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+        encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #else
+        // No support for key owner
+        encoded_key = key;
+    #endif
 
     return psa_export_key(encoded_key, data, data_size,
                           &(out_vec[0].len));
@@ -337,7 +362,12 @@ psa_status_t tfm_crypto_export_public_key(psa_invec in_vec[],
     }
 #endif
 
-    encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+        encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #else
+        // No support for key owner
+        encoded_key = key;
+    #endif
 
     return psa_export_public_key(encoded_key, data, data_size,
                                  &(out_vec[0].len));
@@ -372,7 +402,12 @@ psa_status_t tfm_crypto_purge_key(psa_invec in_vec[],
     }
 #endif
 
-    encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+        encoded_key = mbedtls_svc_key_id_make(partition_id, key);
+    #else
+        // No support for key owner
+        encoded_key = key;
+    #endif
 
     return psa_purge_key(encoded_key);
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -419,7 +454,12 @@ psa_status_t tfm_crypto_copy_key(psa_invec in_vec[],
         return status;
     }
 
-    encoded_key = mbedtls_svc_key_id_make(partition_id, source_key_id);
+    #ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+        encoded_key = mbedtls_svc_key_id_make(partition_id, source_key_id);
+    #else
+        // No support for key owner
+        encoded_key = source_key_id;
+    #endif
 
     status = psa_copy_key(encoded_key, &key_attributes, &target_key);
     if (status != PSA_SUCCESS) {

@@ -27,34 +27,45 @@ psa_status_t tfm_crypto_key_attributes_from_client(
                     int32_t client_id,
                     psa_key_attributes_t *key_attributes)
 {
-#if !defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
-    (void)client_id;
-#endif
-    psa_core_key_attributes_t *core;
+    #if !defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
+        (void)client_id;
+    #endif
+    #ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+        psa_core_key_attributes_t *core;
 
-    if (client_key_attr == NULL || key_attributes == NULL) {
-        return PSA_ERROR_PROGRAMMER_ERROR;
-    }
+        if (client_key_attr == NULL || key_attributes == NULL) {
+            return PSA_ERROR_PROGRAMMER_ERROR;
+        }
 
-    *key_attributes = psa_key_attributes_init();
-    core = &(key_attributes->MBEDTLS_PRIVATE(core));
+        *key_attributes = psa_key_attributes_init();
+        core = &(key_attributes->MBEDTLS_PRIVATE(core));
 
-    /* Copy core key attributes from the client core key attributes */
-    core->MBEDTLS_PRIVATE(type) = client_key_attr->type;
-    core->MBEDTLS_PRIVATE(lifetime) = client_key_attr->lifetime;
-    core->MBEDTLS_PRIVATE(policy).MBEDTLS_PRIVATE(usage) =
-                                                     client_key_attr->usage;
-    core->MBEDTLS_PRIVATE(policy).MBEDTLS_PRIVATE(alg) =
-                                                     client_key_attr->alg;
-    core->MBEDTLS_PRIVATE(bits) = client_key_attr->bits;
+        /* Copy core key attributes from the client core key attributes */
+        core->MBEDTLS_PRIVATE(type) = client_key_attr->type;
+        core->MBEDTLS_PRIVATE(lifetime) = client_key_attr->lifetime;
+        core->MBEDTLS_PRIVATE(policy).MBEDTLS_PRIVATE(usage) =
+                                                        client_key_attr->usage;
+        core->MBEDTLS_PRIVATE(policy).MBEDTLS_PRIVATE(alg) =
+                                                        client_key_attr->alg;
+        core->MBEDTLS_PRIVATE(bits) = client_key_attr->bits;
 
-#if defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
-    /* Use the client key id as the key_id and its partition id as the owner */
-    core->MBEDTLS_PRIVATE(id).MBEDTLS_PRIVATE(key_id) = client_key_attr->id;
-    core->MBEDTLS_PRIVATE(id).MBEDTLS_PRIVATE(owner) = client_id;
-#else
-    core->MBEDTLS_PRIVATE(id) = client_key_attr->id;
-#endif
+    #if defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
+        /* Use the client key id as the key_id and its partition id as the owner */
+        core->MBEDTLS_PRIVATE(id).MBEDTLS_PRIVATE(key_id) = client_key_attr->id;
+        core->MBEDTLS_PRIVATE(id).MBEDTLS_PRIVATE(owner) = client_id;
+    #else
+        core->MBEDTLS_PRIVATE(id) = client_key_attr->id;
+    #endif
+    #else
+        /* Copy core key attributes from the client core key attributes */
+
+        key_attributes->type = client_key_attr->type;
+        key_attributes->lifetime = client_key_attr->lifetime;
+        key_attributes->usage = client_key_attr->usage;
+        key_attributes->alg = client_key_attr->alg;
+        key_attributes->bits = client_key_attr->bits;
+        key_attributes->id = client_key_attr->id;
+    #endif
 
     return PSA_SUCCESS;
 }
@@ -66,23 +77,34 @@ psa_status_t tfm_crypto_key_attributes_to_client(
         return PSA_ERROR_PROGRAMMER_ERROR;
     }
 
-    struct psa_client_key_attributes_s v = PSA_CLIENT_KEY_ATTRIBUTES_INIT;
-    *client_key_attr = v;
-    psa_core_key_attributes_t core = key_attributes->MBEDTLS_PRIVATE(core);
+    #ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+        struct psa_client_key_attributes_s v = PSA_CLIENT_KEY_ATTRIBUTES_INIT;
+        *client_key_attr = v;
+        psa_core_key_attributes_t core = key_attributes->MBEDTLS_PRIVATE(core);
 
-    /* Copy core key attributes from the client core key attributes */
-    client_key_attr->type = core.MBEDTLS_PRIVATE(type);
-    client_key_attr->lifetime = core.MBEDTLS_PRIVATE(lifetime);
-    client_key_attr->usage = core.MBEDTLS_PRIVATE(policy).MBEDTLS_PRIVATE(usage);
-    client_key_attr->alg = core.MBEDTLS_PRIVATE(policy).MBEDTLS_PRIVATE(alg);
-    client_key_attr->bits = core.MBEDTLS_PRIVATE(bits);
+        /* Copy core key attributes from the client core key attributes */
+        client_key_attr->type = core.MBEDTLS_PRIVATE(type);
+        client_key_attr->lifetime = core.MBEDTLS_PRIVATE(lifetime);
+        client_key_attr->usage = core.MBEDTLS_PRIVATE(policy).MBEDTLS_PRIVATE(usage);
+        client_key_attr->alg = core.MBEDTLS_PRIVATE(policy).MBEDTLS_PRIVATE(alg);
+        client_key_attr->bits = core.MBEDTLS_PRIVATE(bits);
 
-#if defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
-    /* Return the key_id as the client key id, do not return the owner */
-    client_key_attr->id = core.MBEDTLS_PRIVATE(id).MBEDTLS_PRIVATE(key_id);
-#else
-    client_key_attr->id = core.MBEDTLS_PRIVATE(id);
-#endif
+        #if defined(MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER)
+            /* Return the key_id as the client key id, do not return the owner */
+            client_key_attr->id = core.MBEDTLS_PRIVATE(id).MBEDTLS_PRIVATE(key_id);
+        #else
+            client_key_attr->id = core.MBEDTLS_PRIVATE(id);
+        #endif
+    #else
+        /* Copy core key attributes from the client core key attributes */
+        client_key_attr->type = key_attributes->type;
+        client_key_attr->lifetime = key_attributes->lifetime;
+        client_key_attr->usage = key_attributes->usage;
+        client_key_attr->alg = key_attributes->alg;
+        client_key_attr->bits = key_attributes->bits;
+        client_key_attr->id = key_attributes->id;
+    #endif
+
 
     return PSA_SUCCESS;
 }
@@ -105,7 +127,12 @@ psa_status_t tfm_crypto_encode_id_and_owner(psa_key_id_t key_id,
     }
 
     /* Use the client key id as the key_id and its partition id as the owner */
-    *enc_key_ptr = mbedtls_svc_key_id_make(partition_id, key_id);
+    #ifdef CRYPTO_IMPLEMENTATION_MBEDTLS
+        *enc_key_ptr = mbedtls_svc_key_id_make(partition_id, key_id);
+    #else
+        // No support for key owner
+        *enc_key_ptr = key_id;
+    #endif
 
     return PSA_SUCCESS;
 }
