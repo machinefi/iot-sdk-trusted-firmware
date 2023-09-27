@@ -37,10 +37,15 @@ if(CRYPTO_IMPL STREQUAL "MbedTLS")
     target_link_libraries(tfm_psa_rot_partition_crypto 
         PRIVATE mbedcrypto
     )
-endif()
-
-if(CRYPTO_IMPL STREQUAL "TinyCrypt")
-  target_link_libraries(tfm_psa_rot_partition_crypto PRIVATE tinycrypt)
+else ()
+    if(CRYPTO_IMPL STREQUAL "TinyCrypt")
+        target_link_libraries(tfm_psa_rot_partition_crypto PRIVATE tinycrypt)
+    else ()
+        target_compile_options(tfm_psa_rot_partition_crypto PUBLIC -imacros ${EXTERN_MBEDTLS_CONFIG})
+        add_definitions(-DCRYPTO_IMPLEMENTATION="MbedTLS")
+        add_definitions(-DCRYPTO_IMPLEMENTATION_MBEDTLS)
+        target_link_libraries(tfm_psa_rot_partition_crypto PRIVATE mbedTLS)
+    endif()
 endif()
 
 # Linking to external interfaces
